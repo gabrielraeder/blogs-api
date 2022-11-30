@@ -1,4 +1,4 @@
-const { BlogPost, PostCategory, sequelize } = require('../models');
+const { BlogPost, PostCategory, sequelize, User, Category } = require('../models');
 const { verifyToken } = require('../auth/jwtFunctions');
 const { categoryIdExists } = require('./validations/inputValidations');
 
@@ -22,6 +22,17 @@ const addPost = async ({ title, content, categoryIds }, token) => {
   }
 };
 
+const getAll = async () => {
+  const allPosts = await BlogPost.findAll({
+    include: [
+      { model: User, as: 'user', attributes: { exclude: ['password'] } },
+      { model: Category, as: 'categories', through: { attributes: [] } },
+  ],
+  });
+  return allPosts;
+};
+
 module.exports = {
   addPost,
+  getAll,
 };

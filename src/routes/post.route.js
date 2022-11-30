@@ -6,5 +6,6 @@ const postMiddleware = require('../middlewares/postFields.middleware');
 const router = express.Router();
 
 router.post('/', postMiddleware, authMiddleware, postController.addPost);
+router.get('/', authMiddleware, postController.getAll);
 
 module.exports = router;
