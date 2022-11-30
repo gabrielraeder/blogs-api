@@ -43,8 +43,19 @@ const getById = async (id) => {
   return { type: null, message: post };
 };
 
+const update = async (data, id) => {
+  const [qtdUpdated] = await BlogPost.update(
+    data,
+    { where: { id } },
+  );
+  if (qtdUpdated === 0) return { type: 'NOT_FOUND', message: 'no post found' };
+  const updatedPost = await getById(+id);
+  return updatedPost;
+};
+
 module.exports = {
   addPost,
   getAll,
   getById,
+  update,
 };
