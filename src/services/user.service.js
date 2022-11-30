@@ -28,12 +28,19 @@ const getAll = async () => {
     const { password: _password, ...userWithoutPassword } = dataValues;
     return userWithoutPassword;
   });
-  console.log(usersWithoutPass);
   return usersWithoutPass;
+};
+
+const getById = async (id) => {
+  const user = await User.findByPk(+id);
+  if (!user) return { type: 'NOT_FOUND', message: 'User does not exist' };
+  const { password: _password, ...userWithoutPassword } = user.dataValues;
+  return { type: null, message: userWithoutPassword };
 };
 
 module.exports = {
   login,
   createUser,
   getAll,
+  getById,
 };
