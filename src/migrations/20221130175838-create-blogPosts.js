@@ -22,15 +22,13 @@ module.exports = {
         type: Sequelize.INTEGER,
         onDelete: 'CASCADE',
       },
-      created_at: {
+      published: {
         allowNull: false,
         type: Sequelize.DATE,
-        field: 'published',
       },
-      updated_at:{
+      updated:{
         allowNull: false,
         type: Sequelize.DATE,
-        field: 'updated',
       }
     });
   },

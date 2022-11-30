@@ -1,3 +1,4 @@
+const { Category } = require('../../models');
 const schemas = require('./schemas');
 
 const createUserValidations = ({ email, displayName, password }) => {
@@ -22,6 +23,14 @@ const createUserValidations = ({ email, displayName, password }) => {
   return { type: null, message: '' };
 };
 
+const categoryIdExists = async (array) => {
+  const categories = await Category.findAll({ attributes: ['id'] });
+  const catIDS = categories.map((c) => c.id);
+  const check = catIDS.every((id) => array.includes(id));
+  return check;
+};
+
 module.exports = {
   createUserValidations,
+  categoryIdExists,
 };
