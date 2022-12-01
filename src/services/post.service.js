@@ -48,9 +48,17 @@ const update = async (data, id) => {
     data,
     { where: { id } },
   );
-  if (qtdUpdated === 0) return { type: 'NOT_FOUND', message: 'no post found' };
+  if (qtdUpdated === 0) return { type: 'NOT_FOUND', message: 'Post does not exist' };
   const updatedPost = await getById(+id);
   return updatedPost;
+};
+
+const remove = async (postId) => {
+  // const checkIds = await checkUserPermission(postId, userId);
+  // if (checkIds.type) return checkIds;
+
+  await BlogPost.destroy({ where: { id: postId } });
+  return { type: null, message: '' };
 };
 
 module.exports = {
@@ -58,4 +66,5 @@ module.exports = {
   getAll,
   getById,
   update,
+  remove,
 };

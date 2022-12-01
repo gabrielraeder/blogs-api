@@ -30,6 +30,15 @@ const categoryIdExists = async (array) => {
   return check;
 };
 
+// const checkUserPermission = async (postId, userId) => {
+//   const findPost = await BlogPost.findByPk(postId);
+//   if (!findPost) return { type: 'NOT_FOUND', message: 'Post does not exist' };
+
+//   console.log(findPost);
+//   if (findPost.userId !== userId) return { type: 'UNAUTHORIZED', message: 'Unauthorized user' };
+//   return { type: null, message: '' };
+// };
+
 module.exports = {
   createUserValidations,
   categoryIdExists,
