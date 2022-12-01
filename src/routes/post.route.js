@@ -7,6 +7,7 @@ const idCheckMid = require('../middlewares/idCheck.middleware');
 
 const router = express.Router();
 
+router.get('/search', authMiddleware, postController.getByQuery);
 router.post('/', postMiddleware, authMiddleware, postController.addPost);
 router.get('/', authMiddleware, postController.getAll);
 router.get('/:id', authMiddleware, postController.getById);

@@ -38,10 +38,17 @@ const remove = async (req, res) => {
   return res.status(204).json();
 };
 
+const getByQuery = async (req, res) => {
+  const { q } = req.query;
+  const result = await postService.getByQuery(q);
+  return res.status(200).json(result);
+};
+
 module.exports = {
   addPost,
   getAll,
   getById,
   update,
   remove,
+  getByQuery,
 };

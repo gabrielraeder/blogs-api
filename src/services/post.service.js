@@ -1,3 +1,4 @@
+const { Op } = require('sequelize');
 const { BlogPost, PostCategory, sequelize, User, Category } = require('../models');
 const { verifyToken } = require('../auth/jwtFunctions');
 const { categoryIdExists } = require('./validations/inputValidations');
@@ -61,10 +62,25 @@ const remove = async (postId) => {
   return { type: null, message: '' };
 };
 
+const getByQuery = async (q) => {
+  if (!q) return getAll();
+  const posts = await BlogPost.findAll({
+    where: {
+      [Op.or]: [{ title: { [Op.substring]: q } }, { content: { [Op.substring]: q } }],
+    },
+    include: [
+      { model: User, as: 'user', attributes: { exclude: ['password'] } },
+      { model: Category, as: 'categories', through: { attributes: [] } },
+    ],
+  });
+  return posts;
+};
+
 module.exports = {
   addPost,
   getAll,
   getById,
   update,
   remove,
+  getByQuery,
 };
